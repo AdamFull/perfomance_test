@@ -1,0 +1,22 @@
+{
+    "aerith_hd": {
+        "src": "images/aerith_hd/src.jpg",
+        "mask": "images/aerith_hd/mask.jpg",
+        "ref": "images/aerith_hd/ref.png"
+    },
+    "aerith_fhd": {
+        "src": "images/aerith_fhd/src.jpg",
+        "mask": "images/aerith_fhd/mask.jpg",
+        "ref": "images/aerith_fhd/ref.png"
+    },
+    "aerith_2k": {
+        "src": "images/aerith_2k/src.jpg",
+        "mask": "images/aerith_2k/mask.jpg",
+        "ref": "images/aerith_2k/ref.png"
+    },
+    "aerith_4k": {
+        "src": "images/aerith_4k/src.jpg",
+        "mask": "images/aerith_4k/mask.jpg",
+        "ref": "images/aerith_4k/ref.png"
+    }
+}

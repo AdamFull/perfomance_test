@@ -1,0 +1,100 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    signingConfigs {
+        debug {
+            storeFile file('D:\\GitHub\\perfomance_test\\keystore.jks')
+            storePassword 'g159753g159753H'
+            keyAlias 'key0'
+            keyPassword 'g159753g159753H'
+        }
+    }
+    compileSdk 32
+    buildToolsVersion '30.0.3'
+    ndkVersion '22.1.7171670'
+
+    defaultConfig {
+        applicationId "com.example.perfomance_test"
+        minSdk 21
+        targetSdk 32
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        externalNativeBuild {
+            cmake {
+                cppFlags '-std=c++17'
+                arguments "-DANDROID_ARM_NEON=ON -DANDROID_ARM_SVE=ON"
+            }
+        }
+
+        ndk {
+            abiFilters "armeabi-v7a", "arm64-v8a"
+        }
+        signingConfig signingConfigs.debug
+    }
+
+    sourceSets.main {
+        java.srcDir "src"
+        res.srcDir "res"
+        manifest.srcFile "AndroidManifest.xml"
+        assets.srcDir "../../resources"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    externalNativeBuild {
+        cmake {
+            path file('../../CMakeLists.txt')
+            version '3.18.1'
+        }
+    }
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+/*android.applicationVariants.all { variant ->
+    def project_root_folder = "${projectDir}/../.."
+    def dest_assets_folder = "${projectDir}/assets"
+
+    // delete previous files first
+    delete dest_assets_folder
+    def targetName = variant.name.capitalize()
+    def copyTaskName = "copy${targetName}ResourcesToAssets"
+
+    project.tasks.register(copyTaskName) {
+        copy {
+            from "${buildDir}/../../../resources"
+            into "${buildDir}/intermediates/assets/${variant.dirName}"
+        }
+    }
+    tasks.getByName("pre${targetName}Build").dependsOn copyTaskName
+}*/
+
+dependencies {
+
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'com.google.android.material:material:1.7.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'com.google.android.material:material:latest'
+    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.4'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+}
