@@ -53,7 +53,7 @@ std::string CImageMergingTest::finalize()
         for (auto& result : testResult.vChunks)
         {
             result.iPlace = place++;
-            std::cout << fmt::format("\"{}\": {:.5f}\n", result.srName, result.fMean);
+            std::cout << fmt::format("{}) \"{}\": {:.5f}ms\n", result.iPlace, result.srName, result.fMean);
         }
 
         auto fastest = getFastest(testResult);

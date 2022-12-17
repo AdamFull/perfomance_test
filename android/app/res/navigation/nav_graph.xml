@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/RunTestsFragment">
+
+    <fragment
+        android:id="@+id/RunTestsFragment"
+        android:name="com.example.perfomance_test.ui.main.testing.RunTestsFragment"
+        android:label="@string/tab_text_2"
+        tools:layout="@layout/fragment_run_tests">
+        <action
+            android:id="@+id/open_result"
+            app:destination="@id/ResultScoresFragment"
+            app:popUpTo="@id/ResultScoresFragment">
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/ResultScoresFragment"
+        android:name="com.example.perfomance_test.ui.main.score.ResultScoresFragment"
+        android:label="@string/tab_text_3"
+        tools:layout="@layout/fragment_result_scores">
+        <argument
+            android:name="result"
+            app:argType="string"
+            android:defaultValue="{}" />
+    </fragment>
+</navigation>

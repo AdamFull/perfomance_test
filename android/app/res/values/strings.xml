@@ -1,3 +1,16 @@
 <resources>
-    <string name="app_name">Perfomance test</string>
+    <string name="app_name">My Application</string>
+    <string name="tab_text_1">Cpu features</string>
+    <string name="tab_text_2">Benchmark</string>
+    <string name="tab_text_3">Results</string>
+    <string name="generic_text">%s</string>
+    <string name="algorithm_name">Name</string>
+    <string name="algorithm_deviation">Deviation</string>
+    <string name="algorithm_mean">Mean</string>
+    <string name="algorithm_variance">Variance</string>
+    <string name="algorithm_valid">Is Valid</string>
+    <string name="algorithm_sameless">Sameless</string>
+    <string name="algorithm_score">Score</string>
+    <string name="algorithm_place">Place</string>
+    <string name="algorithm_fmt">%s: %s</string>
 </resources>

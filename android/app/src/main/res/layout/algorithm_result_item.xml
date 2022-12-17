@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="score"
+            type="com.example.perfomance_test.ui.main.score.AlgotithmResultBlockData" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:text="@{@string/algorithm_fmt(@string/algorithm_name,score.name)}"
+            android:textStyle="bold|italic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/algorithm_name"
+            android:layout_weight="0.5"
+            android:gravity="left"/>
+        <TextView
+            android:text="@{@string/algorithm_fmt(@string/algorithm_place,score.place)}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/algorithm_place"
+            android:layout_weight="0.5"
+            android:gravity="left"/>
+        <TextView
+            android:text="@{@string/algorithm_fmt(@string/algorithm_score,score.score)}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/algorithm_score"
+            android:layout_weight="0.5"
+            android:gravity="left"/>
+        <TextView
+            android:text="@{@string/algorithm_fmt(@string/algorithm_deviation,score.deviation)}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/algorithm_deviation"
+            android:layout_weight="0.5"
+            android:gravity="left"/>
+        <TextView
+            android:text="@{@string/algorithm_fmt(@string/algorithm_mean,score.mean)}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/algorithm_mean"
+            android:layout_weight="0.5"
+            android:gravity="left"/>
+        <TextView
+            android:text="@{@string/algorithm_fmt(@string/algorithm_variance,score.variance)}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/algorithm_variance"
+            android:layout_weight="0.5"
+            android:gravity="left"/>
+        <TextView
+            android:text="@{@string/algorithm_fmt(@string/algorithm_valid,score.valid)}"
+            android:textColor="@{score.valid ? @color/green : @color/red}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/algorithm_valid"
+            android:layout_weight="0.5"
+            android:gravity="left"/>
+        <TextView
+            android:text="@{@string/algorithm_fmt(@string/algorithm_sameless,score.sameless)}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/algorithm_sameless"
+            android:layout_weight="0.5"
+            android:gravity="left"/>
+    </LinearLayout>
+</layout>

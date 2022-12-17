@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="cpuinfo"
+            type="com.example.perfomance_test.ui.main.cpuinfo.CpuInfoItemData" />
+    </data>
+
+    <TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:text="@{cpuinfo.name}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/cpu_feature_name"
+            android:layout_weight="0.5"
+            android:textStyle="bold"
+            android:gravity="left"/>
+
+        <TextView
+            android:text="@{@string/generic_text(cpuinfo.status)}"
+            android:textColor="@{cpuinfo.status ? @color/green : @color/red}"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/cpu_feature_status"
+            android:layout_weight="0.5"
+            android:gravity="center"/>
+    </TableRow>
+</layout>
