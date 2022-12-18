@@ -16,27 +16,7 @@ namespace testing
 
         // Run test with name "srName" for algorithm "function"
 
-        void run(const std::string& srName = "", size_t times = 1)
-        {
-            if (srName.empty())
-            {
-                for (auto& [srAlgName, function] : mAlgorithms)
-                    run(srAlgName, times);
-            }
-            else
-            {
-                auto algorithm = mAlgorithms.find(srName);
-                if (algorithm != mAlgorithms.end())
-                {
-                    for (auto& [srCase, testResult] : mTestResults)
-                    {
-                        auto result = run_image_merging_test(algorithm->second, srName, srCase, mImages[srCase], times);
-                        std::cout << fmt::format("Algorithm: \"{}\" with case \"{}\" mean time: {:.5f}ms\n", srName, srCase, result.fMean);
-                        testResult.vChunks.emplace_back(result);
-                    }
-                }
-            }
-        }
+        void run(const std::string& srName = "", size_t times = 1);
 
         template<class _Func>
         void add(_Func&& function, const std::string& srName)

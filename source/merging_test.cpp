@@ -1,4 +1,5 @@
 #include "merging_test.h"
+#include "../main.h"
 
 extern fs::path writablePath;
 
@@ -14,6 +15,28 @@ CImageMergingTest::~CImageMergingTest()
     mImages.clear();
     mTestCases.clear();
     mTestResults.clear();
+}
+
+void CImageMergingTest::run(const std::string& srName, size_t times)
+{
+    if (srName.empty())
+    {
+        for (auto& [srAlgName, function] : mAlgorithms)
+            run(srAlgName, times);
+    }
+    else
+    {
+        auto algorithm = mAlgorithms.find(srName);
+        if (algorithm != mAlgorithms.end())
+        {
+            for (auto& [srCase, testResult] : mTestResults)
+            {
+                auto result = run_image_merging_test(algorithm->second, srName, srCase, mImages[srCase], times);
+                FPrint::message(fmt::format("Algorithm: \"{}\" with case \"{}\" mean time: {:.5f}ms\n\0", srName, srCase, result.fMean));
+                testResult.vChunks.emplace_back(result);
+            }
+        }
+    }
 }
 
 const FTestChunk& CImageMergingTest::getFastest(const FTestResult& testResult) const
@@ -43,7 +66,7 @@ std::string CImageMergingTest::finalize()
 {
     for (auto& [srCaseName, testResult] : mTestResults)
     {
-        std::cout << fmt::format("\nCase \"{}\" scores\n", srCaseName);
+        FPrint::message(fmt::format("\nCase \"{}\" scores\n\0", srCaseName));
 
         std::sort(testResult.vChunks.begin(), testResult.vChunks.end(), [](const FTestChunk& l, const FTestChunk& r)
             { return l.fMean < r.fMean; });
@@ -53,7 +76,7 @@ std::string CImageMergingTest::finalize()
         for (auto& result : testResult.vChunks)
         {
             result.iPlace = place++;
-            std::cout << fmt::format("{}) \"{}\": {:.5f}ms\n", result.iPlace, result.srName, result.fMean);
+            FPrint::message(fmt::format("{}) \"{}\": {:.5f}ms\n\0", result.iPlace, result.srName, result.fMean));
         }
 
         auto fastest = getFastest(testResult);
@@ -63,7 +86,7 @@ std::string CImageMergingTest::finalize()
         testResult.srWorse = slowest.srName;
         testResult.fDelta = slowest.fMean - fastest.fMean;
 
-        std::cout << fmt::format("Best: \"{}\"\nWorse:\"{}\"\nDelta: {}ms\n", testResult.srBest, testResult.srWorse, testResult.fDelta);
+        FPrint::message(fmt::format("Best: \"{}\"\nWorse:\"{}\"\nDelta: {}ms\n\0", testResult.srBest, testResult.srWorse, testResult.fDelta));
     }
 
     auto srScoresPath = writablePath / "scores.json";

@@ -1,9 +1,12 @@
 #include "utility.h"
 #include "merging_test.h"
 #include "algorithms.h"
+#include "main.h"
 
 #ifdef ANDROID
 #include <jni.h>
+JNIEnv* jnienv{ nullptr };
+jobject targetclass;
 #endif
 
 using namespace testing;
@@ -263,6 +266,18 @@ std::string start_tests(const std::string& srAlgorithm, size_t exec_times)
     return pTestHandle->finalize();
 }
 
+void FPrint::message(const std::string& message)
+{
+#ifdef ANDROID
+    jstring jstr = jnienv->NewStringUTF(message.c_str());
+    jclass clazz = jnienv->FindClass("com/example/perfomance_test/ui/main/testing/RunTestsFragment");
+    jmethodID setProgress = jnienv->GetMethodID(clazz, "setProgressString", "(Ljava/lang/String;)V");
+    jnienv->CallVoidMethod(targetclass, setProgress, jstr);
+#else
+    std::cout << message;
+#endif
+}
+
 #ifdef ANDROID
 extern "C"
 JNIEXPORT void JNICALL
@@ -306,6 +321,9 @@ Java_com_example_perfomance_1test_ui_main_testing_RunTestsFragment_runTest(
     std::string srAlgorithm = std::string(convertedValue);
     if (srAlgorithm == "all")
         srAlgorithm = "";
+
+    jnienv = env;
+    targetclass = thiz;
 
     auto result = run_test_func(start_tests, srAlgorithm, static_cast<size_t>(num_iterations));
     std::string scores_data;

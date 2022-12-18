@@ -118,7 +118,17 @@ class RunTestsFragment : Fragment() {
         }
     }
 
+    fun setProgressString(message: String) {
+        activity?.runOnUiThread {
+            progressDialog.setMessage(message)
+        }
+    }
+
     external fun setTestCase(testCase: String)
     external fun runTest(algorithm: String, numIterations: Float): String
     external fun getAvaliableTestCasesAndAlgorithms(): String
+
+    companion object {
+
+    }
 }

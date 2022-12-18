@@ -4,6 +4,9 @@ import android.content.res.AssetManager
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.navigateUp
 import androidx.viewpager.widget.ViewPager
 import com.example.perfomance_test.databinding.ActivityMainBinding
 import com.example.perfomance_test.ui.main.SectionsPagerAdapter

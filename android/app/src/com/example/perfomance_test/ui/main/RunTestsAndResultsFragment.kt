@@ -2,16 +2,18 @@ package com.example.perfomance_test.ui.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedDispatcher
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
+import androidx.fragment.app.FragmentManager
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
-import androidx.navigation.ui.navigateUp
 import com.example.perfomance_test.R
 import com.example.perfomance_test.databinding.FragmentRunTestsAndResultsBinding
 
@@ -46,6 +48,9 @@ class RunTestsAndResultsFragment : Fragment() {
         if (childNavController != null) {
             val navController = childNavController.navController
             appBarConfiguration = AppBarConfiguration(navController.graph)
+            toolbar.setNavigationOnClickListener {_ ->
+                NavigationUI.navigateUp(navController, appBarConfiguration)
+            }
             setupActionBarWithNavController(requireActivity() as AppCompatActivity, navController, appBarConfiguration)
         }
     }
