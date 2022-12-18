@@ -114,9 +114,14 @@ void initialize_test(const std::string& srWritablePath)
 
     
 #elif IS_ARM_BUILD
+#if IS_ARM64_BUILD
+    static const auto features = cpu_features::GetAarch64Info().features;
+    if (features.asimd)
+#else
     static const auto features = cpu_features::GetArmInfo().features;
-
     if (features.neon)
+#endif
+    
     {
         pTestHandle->add([&](int32_t nWidth, int32_t nHeight, int32_t nBytesPerRow, uint8_t* pRGBABuffer, uint8_t* pAlphaBuffer)
             {
@@ -216,13 +221,63 @@ std::string get_cpu_features()
     vFeatures.emplace_back(FCpuFeature{ "fs_rep_stosb", cpuinfo.features.fs_rep_stosb });
     vFeatures.emplace_back(FCpuFeature{ "fs_rep_cmpsb_scasb", cpuinfo.features.fs_rep_cmpsb_scasb });
 #elif IS_ARM_BUILD
-    static const auto cpuinfo = cpu_features::GetArmInfo();
+#if IS_ARM64_BUILD
+    static const auto cpuinfo = cpu_features::GetAarch64Info();
 
-    //json["other"]["implementer"] = cpuinfo.implementer;
-    //json["other"]["architecture"] = cpuinfo.architecture;
-    //json["other"]["variant"] = cpuinfo.variant;
-    //json["other"]["part"] = cpuinfo.part;
-    //json["other"]["revision"] = cpuinfo.revision;
+    vFeatures.emplace_back(FCpuFeature{ "fp", cpuinfo.features.fp});
+    vFeatures.emplace_back(FCpuFeature{ "asimd", cpuinfo.features.asimd});
+    vFeatures.emplace_back(FCpuFeature{ "evtstrm", cpuinfo.features.evtstrm});
+    vFeatures.emplace_back(FCpuFeature{ "aes", cpuinfo.features.aes});
+    vFeatures.emplace_back(FCpuFeature{ "pmull", cpuinfo.features.pmull});
+    vFeatures.emplace_back(FCpuFeature{ "sha1", cpuinfo.features.sha1});
+    vFeatures.emplace_back(FCpuFeature{ "sha2", cpuinfo.features.sha2});
+    vFeatures.emplace_back(FCpuFeature{ "crc32", cpuinfo.features.crc32});
+    vFeatures.emplace_back(FCpuFeature{ "atomics", cpuinfo.features.atomics});
+    vFeatures.emplace_back(FCpuFeature{ "fphp", cpuinfo.features.fphp});
+    vFeatures.emplace_back(FCpuFeature{ "asimdhp", cpuinfo.features.asimdhp});
+    vFeatures.emplace_back(FCpuFeature{ "asimdrdm", cpuinfo.features.asimdrdm});
+    vFeatures.emplace_back(FCpuFeature{ "jscvt", cpuinfo.features.jscvt});
+    vFeatures.emplace_back(FCpuFeature{ "fcma", cpuinfo.features.fcma});
+    vFeatures.emplace_back(FCpuFeature{ "lrcpc", cpuinfo.features.lrcpc});
+    vFeatures.emplace_back(FCpuFeature{ "dcpop", cpuinfo.features.dcpop});
+    vFeatures.emplace_back(FCpuFeature{ "sha3", cpuinfo.features.sha3});
+    vFeatures.emplace_back(FCpuFeature{ "sm3", cpuinfo.features.sm3});
+    vFeatures.emplace_back(FCpuFeature{ "sm4", cpuinfo.features.sm4});
+    vFeatures.emplace_back(FCpuFeature{ "asimddp", cpuinfo.features.asimddp});
+    vFeatures.emplace_back(FCpuFeature{ "sha512", cpuinfo.features.sha512});
+    vFeatures.emplace_back(FCpuFeature{ "sve", cpuinfo.features.sve});
+    vFeatures.emplace_back(FCpuFeature{ "asimdfhm", cpuinfo.features.asimdfhm});
+    vFeatures.emplace_back(FCpuFeature{ "uscat", cpuinfo.features.uscat});
+    vFeatures.emplace_back(FCpuFeature{ "ilrcpc", cpuinfo.features.ilrcpc});
+    vFeatures.emplace_back(FCpuFeature{ "flagm", cpuinfo.features.flagm});
+    vFeatures.emplace_back(FCpuFeature{ "ssbs", cpuinfo.features.ssbs});
+    vFeatures.emplace_back(FCpuFeature{ "sb", cpuinfo.features.sb});
+    vFeatures.emplace_back(FCpuFeature{ "paca", cpuinfo.features.paca});
+    vFeatures.emplace_back(FCpuFeature{ "pacg", cpuinfo.features.pacg});
+    vFeatures.emplace_back(FCpuFeature{ "dcpodp", cpuinfo.features.dcpodp});
+    vFeatures.emplace_back(FCpuFeature{ "sve2", cpuinfo.features.sve2});
+    vFeatures.emplace_back(FCpuFeature{ "sveaes", cpuinfo.features.sveaes});
+    vFeatures.emplace_back(FCpuFeature{ "svepmull", cpuinfo.features.svepmull});
+    vFeatures.emplace_back(FCpuFeature{ "svebitperm", cpuinfo.features.svebitperm});
+    vFeatures.emplace_back(FCpuFeature{ "svesha3", cpuinfo.features.svesha3});
+    vFeatures.emplace_back(FCpuFeature{ "svesm4", cpuinfo.features.svesm4});
+    vFeatures.emplace_back(FCpuFeature{ "flagm2", cpuinfo.features.flagm2});
+    vFeatures.emplace_back(FCpuFeature{ "frint", cpuinfo.features.frint});
+    vFeatures.emplace_back(FCpuFeature{ "svei8mm", cpuinfo.features.svei8mm});
+    vFeatures.emplace_back(FCpuFeature{ "svef32mm", cpuinfo.features.svef32mm});
+    vFeatures.emplace_back(FCpuFeature{ "svef64mm", cpuinfo.features.svef64mm});
+    vFeatures.emplace_back(FCpuFeature{ "svebf16", cpuinfo.features.svebf16});
+    vFeatures.emplace_back(FCpuFeature{ "i8mm", cpuinfo.features.i8mm});
+    vFeatures.emplace_back(FCpuFeature{ "bf16", cpuinfo.features.bf16});
+    vFeatures.emplace_back(FCpuFeature{ "dgh", cpuinfo.features.dgh});
+    vFeatures.emplace_back(FCpuFeature{ "rng", cpuinfo.features.rng});
+    vFeatures.emplace_back(FCpuFeature{ "bti", cpuinfo.features.bti});
+    vFeatures.emplace_back(FCpuFeature{ "mte", cpuinfo.features.mte});
+    vFeatures.emplace_back(FCpuFeature{ "ecv", cpuinfo.features.ecv});
+    vFeatures.emplace_back(FCpuFeature{ "afp", cpuinfo.features.afp});
+    vFeatures.emplace_back(FCpuFeature{ "rpres", cpuinfo.features.rpres});
+#else
+    static const auto cpuinfo = cpu_features::GetArmInfo();
 
     vFeatures.emplace_back(FCpuFeature{ "swp", cpuinfo.features.swp });
     vFeatures.emplace_back(FCpuFeature{ "half", cpuinfo.features.half });
@@ -254,6 +309,7 @@ std::string get_cpu_features()
     vFeatures.emplace_back(FCpuFeature{ "sha1", cpuinfo.features.sha1 });
     vFeatures.emplace_back(FCpuFeature{ "sha2", cpuinfo.features.sha2 });
     vFeatures.emplace_back(FCpuFeature{ "crc32", cpuinfo.features.crc32 });
+#endif
 #endif
 
     auto json = nlohmann::json(vFeatures);
@@ -350,9 +406,7 @@ Java_com_example_perfomance_1test_ui_main_cpuinfo_CpuInfoFragment_getCpuFeatures
     auto srJson = get_cpu_features();
     return env->NewStringUTF(srJson.c_str());
 }
-#endif
-
-#ifdef _WIN32
+#else
 int main()
 {
     initialize_test(fs::current_path().string());

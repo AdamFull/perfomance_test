@@ -20,12 +20,6 @@ add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/external/cpu_features")
 if(ANDROID)
 	add_library(${PROJECT_NAME} SHARED ${PROJECT_WHOLE_SOURCE_FILES})
 	target_link_libraries(${PROJECT_NAME} PUBLIC log android ndk_compat)
-	target_compile_definitions(${PROJECT_NAME} PUBLIC
-			-DCPU_FEATURES_ARCH_ARM
-			-DCPU_FEATURES_OS_ANDROID)
-	target_compile_definitions(cpu_features PUBLIC
-			-DCPU_FEATURES_ARCH_ARM
-			-DCPU_FEATURES_OS_ANDROID)
 else()
 	add_executable(${PROJECT_NAME} ${PROJECT_WHOLE_SOURCE_FILES})
 endif()

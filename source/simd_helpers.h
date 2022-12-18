@@ -4,7 +4,11 @@
 
 #if IS_ARM_BUILD
 #include <arm_neon.h>
+#if IS_ARM64_BUILD
+#include <cpuinfo_aarch64.h>
+#else
 #include <cpuinfo_arm.h>
+#endif // IS_ARM64_BUILD
 #elif IS_x86_6432_BUILD
 #include <cpuinfo_x86.h>
 #endif
